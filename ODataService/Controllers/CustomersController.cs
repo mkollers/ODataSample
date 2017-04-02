@@ -1,21 +1,25 @@
-﻿using System;
+﻿using ODataService.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Configuration;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Linq;
 
 namespace ODataService.Controllers
 {
 	[Route("api/customers")]
 	public class CustomersController : ApiController
 	{
+		private Context _context = new Context();
+
 		// GET: api/Customers
 		[EnableQuery]
-		public IEnumerable<string> Get()
+		public IHttpActionResult Get()
 		{
-			return new string[] { "value1", "value2" };
+				var result = (from c in _context.Customers
+											select c);
+
+				return Ok(result);
 		}
 
 		// GET: api/Customers/5
